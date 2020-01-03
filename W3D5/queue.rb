@@ -41,22 +41,49 @@ class Queue
 end
 
 
+# Visualization
+
+# start with an empty queue
 queue = Queue.new
+
+# add an object using Queue#enqueue
 queue.enqueue(1)
+
+# Queue: [1] 
+#        head
+#        end
+
 queue.enqueue(2)
+
+# Queue: [1] -> [2] 
+#        head
+#               end
+
 queue.enqueue(3)
 
-p queue.peek.data
+# Queue: [1] -> [2] -> [3]
+#        head
+#                      end
+
+p queue.peek.data # returns queue.head
+
+# removing first object
 queue.dequeue
-p queue.peek.data
+# from:
+# Queue: [1] -> [2] -> [3]
+#        head
+#                      end
+
+# to:
+# Queue: [2] -> [3]
+#       head
+#               end
+
+p queue.peek.data # returns 2
 queue.dequeue
-p queue.peek.data
-queue.enqueue(5)
-queue.enqueue(6)
-queue.enqueue(9)
-p queue.peek.data
-queue.dequeue
-queue.dequeue
-queue.dequeue
-p queue.peek.data
+# Queue: [3]
+#       head
+#        end
+
+
 
