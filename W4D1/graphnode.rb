@@ -9,16 +9,15 @@ class GraphNode
         @neighbors = []
     end
 
-
-
 end
 
 def bfs(node, target)
-    queue = [node]
+    queue = [node] # start with the starting node in the queue
     while !queue.empty?
-        curr_node = queue.shift
-        curr_node.visited = true
-        return curr_node.val if curr_node.val == target
+        curr_node = queue.shift # remove it from the queue
+        curr_node.visited = true # mark is as visited
+        return curr_node.val if curr_node.val == target # return the node value if it matches the target
+        # only add neighbors to the queue if they haven't been visited
         curr_node.neighbors.each {|neighbor| queue << neighbor unless neighbor.visited}
     end
     nil
