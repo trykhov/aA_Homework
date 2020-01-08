@@ -4,14 +4,16 @@ class Board
   attr_accessor :cups
 
   def initialize(name1, name2)
-    @name1 = Player.new(name1)
-    @name2 = Player.new(name2)
-    @cups = Array.new(14) {Array.new(4, :stone)}
-    @cups[6], @cups[13] = [], []
+    @player1 = name1
+    @player2 = name2
+    @cups = place_stones
   end
 
   def place_stones
     # helper method to #initialize every non-store cup with four stones each
+    new_arr = Array.new(14) {Array.new(4, :stone)}
+    new_arr[6], new_arr[13] = [], []
+    new_arr
   end
 
   def valid_move?(start_pos)
@@ -20,23 +22,35 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
-    cant_side = start_pos.between?(0, 6) ? 13 : 6
+    curr_player = @player1 == current_player_name ? @player1 : @player2 
+    cant_side = curr_player == @player1 ? 13 : 6 # player cannot put it in other person's score
     num_stones = @cups[start_pos].length
     @cups[start_pos] = []
     i = 1
-    while i <= num_stones
+    count = 0
+    while count < num_stones
       pos = (start_pos + i) % 14
       if pos != cant_side
-        @cups[pos] << :stone
-      else
-        @cup[(pos + 1) % 14] << :stone # skip opponent's score
+        @cups[pos] << :stone # add stone to position
+        count += 1
       end
       i += 1
     end
+    render
+    next_turn(pos)
   end
 
   def next_turn(ending_cup_idx)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    # if it's an empty cup, switch
+    if @cups[ending_cup_idx].length == 1
+      return :switch
+    # if it's the current player and they land on their store point
+    elsif ending_cup_idx == 6 || ending_cup_idx == 13 
+      return :prompt
+    else
+      return :prompt
+    end 
   end
 
   def render
