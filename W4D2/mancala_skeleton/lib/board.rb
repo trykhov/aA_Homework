@@ -24,6 +24,7 @@ class Board
   def make_move(start_pos, current_player_name)
     curr_player = @player1 == current_player_name ? @player1 : @player2 
     cant_side = curr_player == @player1 ? 13 : 6 # player cannot put it in other person's score
+    score_side = curr_player == @player1 ? 6 : 13
     num_stones = @cups[start_pos].length
     @cups[start_pos] = []
     i = 1
@@ -45,9 +46,6 @@ class Board
     # if it's an empty cup, switch
     if @cups[ending_cup_idx].length == 1
       return :switch
-    # if it's the current player and they land on their store point
-    elsif ending_cup_idx == 6 || ending_cup_idx == 13 
-      return :prompt
     else
       return :prompt
     end 
