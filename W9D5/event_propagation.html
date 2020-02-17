@@ -1,0 +1,27 @@
+<div class="outer" style="background-color: green; height: 200px; width: 200px;">
+    <div class="middle" style="background-color: red; height: 100px; width: 100px;">
+      <div class="inner" style="background-color: blue; height: 50px; width: 50px;">
+        I am in the inner-most div!
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const outerDiv = document.querySelector(".outer");
+    outerDiv.addEventListener("click", function(e) {
+      alert("outer");
+    });
+  
+    const middleDiv = document.querySelector(".middle");
+    middleDiv.addEventListener("click", function(e) {
+      e.stopPropagation(); // prevents the bubble up from calling outerDiv()
+      alert("middle");
+       //   will bubble up and call outerDiv() as well
+    });
+  
+    const innerDiv = document.querySelector(".inner");
+    innerDiv.addEventListener("click", function(e) {
+      alert("inner"); 
+    //   will bubble up and call middleDiv() and outerDiv() as well
+    });
+  </script>
